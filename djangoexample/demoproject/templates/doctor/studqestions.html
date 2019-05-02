@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<body>
+<form  enctype="multipart/form-data" class="login-wrapper"   method="post">
+	{% csrf_token%}
+ <style>
+table {
+  width:100%;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+table#t01 tr:nth-child(even) {
+  background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+ background-color: #fff;
+}
+table#t01 th {
+  background-color: black;
+  color: white;
+}
+</style>
+	<h1>  Response page</h1>
+	{%if dict%}
+	<table >
+		<thead>
+		<th>CollegeId</th>
+		<th> Name</th>
+		<th> Queries</th>
+		<th>Response</th>
+		</thead>
+		{%for d in dict%}
+		<tr>
+			<td> {{d.Collegeid}}</td>
+			<td> {{d.Name}}</td>
+			<td> {{d.question}}</td>
+
+			<td> <a href="/doctresponse/{{d.id}}" class="btn btn-primary">Response</a> </td>
+		</tr>
+		{%endfor%}
+	</table>
+	{%else%}
+	<p> No Records</p>
+	{%endif%}
+</form>
+</body>
+</head>
+</html>

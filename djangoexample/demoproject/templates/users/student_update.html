@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <form  method="post">
+      {%csrf_token%}
+    <!--  ids : <input type="text" name="ids" value="{{student.ids}}"> -->
+      Collegeid : <input type="text" name="Collegeid" value="{{student.Collegeid}}"> <br>
+      Employe Number: <input type="" name="Name" value="{{student.Name}}"> <br>
+      Designation : <input type="text" name="Designation" value="{{student.Designation}}"><br>
+      Department : <input type="text" name="Department" value="{{student.Department}}"><br>
+      Dob : <input type="text" name="Dob" value="{{student.Dob}}"><br>
+      Email: <input type="text" name="Email" value="{{student.Email}}"><br>
+      Mobile : <input type="text" name="Mobile" value="{{student.Mobile}}"> <br>
+      <input type="submit" name="" value="Update" class="btn btn-primary">
+
+    </form>
+  </body>
+</html>

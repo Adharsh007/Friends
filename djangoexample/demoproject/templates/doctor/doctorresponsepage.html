@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {%load crispy_forms_tags %}
+</head>
+<body>
+<h1> Provide Response</h1>
+<div class="container">
+ <form method="get" autocomplete="off">
+     {%csrf_token%}
+     {{respo|crispy}}
+     <input type="submit" class="btn btn-primary" value="send">
+ </form>
+    </div>
+</body>
+</html>
