@@ -65,6 +65,17 @@ urlpatterns = [
     url(r'^request_appoint/', views.request_appoint,name='request_appoint'),
     url(r'^s_feedback/', views.student_feedback),
     url(r'^s_update/', views.update_student_view),
+    url(r'^admin_feedback/', views.show_feedback_view),
+    url(r'^app_questions/', views.approve_question_admin),
+    url(r'^reject_question/(?P<id>\d+)/$', views.reject_question_admin),
+    url(r'^approve_question/(?P<id>\d+)/$', views.question_admin),
+    url(r'^doctor_questions/', views.see_questions_doctor_view),
+    url(r'^giving_response/(?P<id>\d+)/$', views.doctor_response_questions),
+
+
+
+
+
 
 
 

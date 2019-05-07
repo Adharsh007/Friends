@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>Review questions from Student</h1>
+    <div class="container">
+    {%if dict%}
+    <table border="2">
+      <thead>
+        <th>Collegeid</th>
+        <th>Student Name</th>
+        <th> Questions</th>
+        <th>Actions</th>
+      </thead>
+      {%for d in dict%}
+      <tr>
+        <td>{{d.Collegeid}}</td>
+        <td>{{d.Name}}</td>
+        <td>{{d.question}}</td>
+        <td><h4> <a href="/approve_question/{{d.id}}"> Approve </a></h4> <h4> <a href="/reject_question/{{d.id}}"> Reject</a></h4></td>
+      </tr>
+      {%endfor%}
+    </table>
+    {%else%}
+     <h1>No feedback Available</h1>
+    {%endif%}
+  </div>
+  </body>
+</html>

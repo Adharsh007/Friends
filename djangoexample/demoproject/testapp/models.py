@@ -149,3 +149,21 @@ class request_appointms(models.Model):
 class student_feedback(models.Model):
     student_name = models.ForeignKey(Register,on_delete=models.CASCADE)
     feedback = models.TextField()
+
+class Approved_questions(models.Model):
+    collegid = models.CharField(max_length=20)
+    Name = models.CharField(max_length=30)
+    question= models.TextField()
+    doctor_id = models.IntegerField()
+    doctor_name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.id
+
+#model for providung doctor response for the question
+class response_from_doctor(models.Model):
+    question_id = models.ForeignKey(Approved_questions,on_delete=models.CASCADE)
+    response = models.TextField()
+
+    def __str__(self):
+        return str(self.id)

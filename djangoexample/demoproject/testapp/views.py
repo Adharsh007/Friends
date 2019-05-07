@@ -3,13 +3,12 @@ from django.core.mail import send_mail
 from django.db import connection
 from django.http import HttpResponse, request
 from django.shortcuts import render, redirect
-# Create your views here.
 from django.template import loader, Context
 from testapp.forms import *
 from testapp.models import  *
 from testapp import config
-
 from .models import *
+#from django.db import connection
 
 
 def hello_view(request):
@@ -484,9 +483,9 @@ def request_appoint(request):
 #view for student feedback
 def student_feedback(request):
     x=config.userid
-    print("inside student_feedback")
+    print("****************inside student_feedback**************************")
     print(x)
-    student = Register.objects.get(id=x)
+    student = Register.objects.get(ids_id=x)
     print(student)
     feedback = student_feedback_form()
     if request.method == 'POST':
@@ -507,3 +506,92 @@ def update_student_view(request):
     print(student)
 
     return render(request,'users/student_update.html',{'student':student})
+
+#view for seeing feedback from admin side
+def show_feedback_view(request):
+    cursor = connection.cursor()
+    cursor.execute("""
+    select testapp_register.Collegeid,testapp_register.Name,testapp_student_feedback.feedback
+    FROM  testapp_student_feedback
+    LEFT OUTER JOIN testapp_register
+    on (testapp_register.id = testapp_student_feedback.student_name_id)
+    """)
+    dict = {}
+    dict = dictfetchall(cursor)
+    print(dict)
+    return render(request,'admin/viewfeedback.html',{'dict':dict})
+
+#Approve questions from admin side
+def approve_question_admin(request):
+    cursor = connection.cursor()
+    cursor.execute("""
+    select testapp_question.id,testapp_question.Collegeid,testapp_question.Name,testapp_question.question
+    FROM testapp_question
+    """)
+    dict = {}
+    dict = dictfetchall(cursor)
+    print(dict)
+    return render(request,'admin/approvequestions.html',{'dict':dict})
+
+#reject student questions from admin side
+def reject_question_admin(request,id):
+    q = question.objects.get(id=id)
+    q.delete()
+    return redirect('/app_questions')
+
+#approve questions
+def question_admin(request, id):
+    aq = question.objects.get(id=id)
+    ac = aq.Collegeid
+    an = aq.Name
+    ques = aq.question
+    doctor = aq.did_id
+    d_name = doctors.objects.get(id=doctor)
+
+    print("******************* inside question approval********************")
+    print(aq)
+    print(ac)
+    print(an)
+    print(ques)
+    print(doctor)
+    print("doctor name is")
+    print(d_name)
+
+    ob= Approved_questions.objects.create(collegid =ac,Name=an,question=ques,doctor_id=doctor,doctor_name=str(d_name))
+    ob.save()
+    aq.delete()
+    return redirect('/app_questions')
+
+#docto is seeing questions belongs to them
+def see_questions_doctor_view(request):
+    print("********************inside Doctor view to his questions ******")
+    x=config.userid
+    print(x)
+    cursor = connection.cursor()
+    cursor.execute("""
+    select testapp_approved_questions.id,testapp_approved_questions.collegid,testapp_approved_questions.Name,testapp_approved_questions.question
+	from testapp_approved_questions
+	LEFT outer join testapp_doctors
+	on (testapp_approved_questions.doctor_id = testapp_doctors.id)
+	left outer join testapp_logins
+	on (testapp_doctors.ids_id = testapp_logins.id)
+	where testapp_logins.id=%d """%(x))
+    dict = {}
+    dict = dictfetchall(cursor)
+    print(dict)
+    return render(request,'doctor/doctorquestionsresponse.html',{'dict':dict})
+
+
+#doctor response views
+def doctor_response_questions(request,id):
+    print("hihihhihhhhihhhh")
+    id = Approved_questions.objects.get(id=int(id))
+    #print(id)
+    form = Doctor_Response()
+    if request.method == 'POST':
+        form = Doctor_Response(request.POST)
+        if form.is_valid():
+            R=form.save(commit=False)
+            R.question_id = id
+            R.save()
+    return render(request,'doctor/giving_response.html',{'form':form})

@@ -44,3 +44,13 @@ class student_feedback_form(forms.ModelForm):
         labels = {
             "feedback" : "Give your Feedback"
         }
+
+
+class Doctor_Response(forms.ModelForm):
+    class Meta:
+        model = response_from_doctor
+        fields = ['response']
+
+        labels = {
+        "response" : "Provide REsponse"
+        }

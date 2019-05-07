@@ -53,3 +53,12 @@ admin.site.register(request_appointms,request_appointmsAdmin)
 class student_feedbackAdmin(admin.ModelAdmin):
     list_display=['student_name','feedback']
 admin.site.register(student_feedback,student_feedbackAdmin)
+
+class Approved_questionsAdmin(admin.ModelAdmin):
+    list_display=['collegid','Name','question','doctor_id','doctor_name']
+admin.site.register(Approved_questions,Approved_questionsAdmin)
+
+
+"""class response_from_doctorAdmin(admin.ModelAdmin):
+    list_display=['question_id','response']"""
+admin.site.register(response_from_doctor)

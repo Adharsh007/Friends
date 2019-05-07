@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1> Student Enquires</h1>
+    {%if dict%}
+    <table border="2">
+      <thead>
+        <th>College_ID</th>
+        <th> Student Name</th>
+        <th> Enquiry</th>
+        <th>Actions</th>
+        </thead>
+        {% for d in dict%}
+        <tr>
+          <td>{{d.collegid}}</td>
+          <td>{{d.Name}}</td>
+          <td>{{d.question}}</td>
+          <td><a href="/giving_response/{{d.id}}">RESPONSE </a></td>
+        </tr>
+        {%endfor%}
+    </table>
+    {%endif%}
+
+  </body>
+</html>
